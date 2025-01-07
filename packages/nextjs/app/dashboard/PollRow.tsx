@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 interface PollRowProps {
   pollId: bigint;
-  onViewResults: (pollId: bigint) => void;
 }
 
-const PollRow: React.FC<PollRowProps> = ({ pollId, onViewResults }) => {
+const PollRow: React.FC<PollRowProps> = ({ pollId }) => {
+  const router = useRouter();
   const [pollDetails, setPollDetails] = useState<any | null>(null);
 
-  // Fetch poll details using the poll ID
   const { data: poll } = useScaffoldReadContract({
     contractName: "Voting",
     functionName: "getPollById",
@@ -18,24 +18,27 @@ const PollRow: React.FC<PollRowProps> = ({ pollId, onViewResults }) => {
 
   useEffect(() => {
     if (poll) {
-      const isActive = poll.endTime > Math.floor(Date.now() / 1000); // Check if the poll is active
+      const isActive = poll.endTime > Math.floor(Date.now() / 1000);
       setPollDetails({
-        id: pollId,
-        name: poll.name,
+        id: pollId.toString(),
+        name: poll.name || "Untitled Poll",
         status: isActive ? "Active" : "Ended",
       });
     }
-  }, [poll, pollId]);
-
-  if (!pollDetails) return null;
+  }, [poll]);
 
   return (
     <tr>
-      <td>{pollDetails.id}</td>
-      <td>{pollDetails.name}</td>
-      <td>{pollDetails.status}</td>
+      <td>{pollDetails?.id}</td>
+      <td>{pollDetails?.name}</td>
+      <td>{pollDetails?.status}</td>
       <td>
-        <button onClick={() => onViewResults(pollId)}>View Results</button>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => router.push(`/poll/${pollId.toString()}`)}
+        >
+          View Results
+        </button>
       </td>
     </tr>
   );
