@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
+import Dashboard from "~~/components/dashboard/Dashboard";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 
@@ -22,6 +23,10 @@ const Home: NextPage = () => {
               <button className="btn">Vote on Poll</button>
             </Link>
           </div>
+        </div>
+
+        <div>
+          <Dashboard />
         </div>
 
 
