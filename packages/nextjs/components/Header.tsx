@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { TbSelect } from "react-icons/tb";
 
 type HeaderMenuLink = {
   label: string;
@@ -19,7 +20,14 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Home",
     href: "/",
   },
-
+  {
+    label: "Create Poll",
+    href: "/create-poll",
+  },
+  {
+    label: "Vote Poll",
+    href: "/vote-poll",
+  },
   {
     label: "Debug Contracts",
     href: "/debug",
@@ -90,12 +98,14 @@ export const Header = () => {
           )}
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-ETH</span>
-            <span className="text-xs">Ethereum dev stack</span>
+        <div className="flex relative w-10 h-10">
+            <div className="cursor-pointer h-full w-full">
+              <TbSelect size="100%" />
+            </div>
+        </div>
+        <div className="flex flex-col">
+            <span className="font-bold leading-tight">OpenVote</span>
+            <span className="text-xs">Your democratic Voting</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
